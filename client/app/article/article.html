@@ -2,12 +2,48 @@
   <!-- view single article  markdown directive will be used here-->
   <div class="post">
     <h2>{{currentArticle.title}}<img class="edit-content" ng-show="user.isAuthed()" ui-sref="edit({id: currentArticle._id})" src="images/cog.png" /></h2>
-    <p btf-markdown="currentArticle.body"></p>
+    <p marked="currentArticle.body"></p>
     <div class="row">
-      <img src="images/avatar.jpg" alt="avatar"/>
+      <gravatar email="hero.email"/>
       <h6>{{currentArticle.author}} | {{currentArticle.createdOn | date:'longDate'}}</h6>
     </div>
   </div>
+  <div class="comment">
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+      // do not render disqus thread if shortname is not entered
+      if (window.heroInfo.disqus_shortname !== undefined) {
+        /* * * CONFIGURATION VARIABLES * * */
+        var disqus_shortname = window.heroInfo.disqus_shortname;
+
+        // load embed.js only once
+        if (window.disqus === undefined) {
+          /* * * DON'T EDIT BELOW THIS LINE * * */
+          (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+          })();
+          window.disqus = true;
+        } else {
+          // embed.js needs to be executed each time for disqus to load
+          // for AJAX calls use reset per disqus's doc
+          reset(window.location.pathname, window.location.href);
+        }
+
+        /* * * Disqus Reset Function * * */
+        var reset = function (newIdentifier, newUrl, newTitle, newLanguage) {
+          DISQUS.reset({
+            reload: true,
+            config: function () {
+              this.page.identifier = newIdentifier;
+              this.page.url = newUrl;
+              // this.page.title = newTitle;
+              // this.language = newLanguage;
+            }
+          });
+        };
+      }
+    </script>
+  </div>
 </div>
-
-

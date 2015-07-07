@@ -51,7 +51,7 @@ angular.module('lightCMS.article', [])
     // edit an article
     .controller('EditArticleController', function($scope, Articles, $state, $stateParams){
       $scope.currentArticle = {};
-
+      $scope.confirmingDelete = false;
       $scope.update = function(){
         Articles.update({
           title: $scope.currentArticle.title,
@@ -67,7 +67,17 @@ angular.module('lightCMS.article', [])
         });
       };
 
+      $scope.confirmDelete = function(){
+          $scope.confirmingDelete = true;
+      };
+
+      $scope.cancel = function(){
+          $scope.confirmingDelete = false;
+      };
+
       $scope.destroy = function(){
+        $scope.confirmingDelete = false;
+
         Articles.delete({
           title: $scope.currentArticle.title,
           body: $scope.currentArticle.body,
@@ -93,9 +103,14 @@ angular.module('lightCMS.article', [])
           });
     })
 
-    //  create a new article
+    // create a new article
     .controller('CreateArticleController', function($scope, Articles, $location){
-      $scope.article = {};
+      // check for saved data in session storage
+      $scope.article = {
+        title: sessionStorage.title || '',
+        body: sessionStorage.body || ''
+      }
+      
       $scope.create = function() {
         Articles.create($scope.article)
           .then(
@@ -103,6 +118,9 @@ angular.module('lightCMS.article', [])
               // redirect since we know we are good?
               $location.url('articles');
               toastr.success('Post successfully created');
+              // empty sessionStorage
+              sessionStorage.removeItem('title');
+              sessionStorage.removeItem('body');
             },
             function(err){
               // alert the user to why we couldnt create the article
@@ -110,4 +128,12 @@ angular.module('lightCMS.article', [])
             }
           );
       };
+
+      // watch article, as well as article.title & article.body
+      $scope.$watchCollection('article', function(scope){
+        // scope = {title: "Angular", body: "Keeps an eye out for you."}
+        // save changes to sessionStorage
+        sessionStorage.setItem('title', scope.title);
+        sessionStorage.setItem('body', scope.body);
+      });
     });

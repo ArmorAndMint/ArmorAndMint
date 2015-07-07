@@ -13,12 +13,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- CSS
+      <link rel="stylesheet" href="css/cheetos.css">
       –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-    <link rel="stylesheet" href="css/normalize.css">
-    <link rel="stylesheet" href="css/skeleton.css">
-    <link rel="stylesheet" href="css/styles.css">
-    <link rel="stylesheet" href="lib/toastr/toastr.min.css"/>
 
+    <!-- CSS Cheetos Font ––––––––––––––––––––––––––––––– -->
+    <link href='http://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
+
+     <!-- CSS 8bit Font ––––––––––––––––––––––––––––––– -->
+    <link href='http://fonts.googleapis.com/css?family=Press+Start+2P' rel='stylesheet' type='text/css'>
+
+    <!-- CSS nicholas cage Font ––––––––––––––––––––––––––––––– -->
+    <link href='http://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
+     <!-- CSS tropical Font ––––––––––––––––––––––––––––––– -->
+    <link href='http://fonts.googleapis.com/css?family=Cabin' rel='stylesheet' type='text/css'>
+    <!-- CSS hr Font ––––––––––––––––––––––––––––––– -->
+    <link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
+
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/skeleton.css">
+    <link id="dynamiccss" rel="stylesheet" href="/css/themes/styles.css">
+    <link rel="stylesheet" href="/lib/toastr/toastr.min.css"/>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/default.min.css">
     <base href="/">
   </head>
 
@@ -29,11 +44,13 @@
       –––––––––––––––––––––––––––––––––––––––––––––––––– -->
      <div class="nav">
        <header>
-         <h1 style="cursor:pointer" ui-sref="articles">LightCMS</h1>
-         <nav>
+         <h1 style="cursor:pointer" ui-sref="articles" id="logo">LightCMS</h1>
+         <nav id="navbar">
            <button ng-show="isAuthed()" ui-sref="create">+ Add Post</button>
+           <button ng-show="isAuthed()" ui-sref="editProfile">Settings</button>
            <button ng-show="isAuthed()" ng-click="signout()">Sign Out</button>
            <button ng-show="!isAuthed()" ui-sref="signin">Sign In</button>
+           <!-- <img class="edit-settings" ng-show="isAuthed()" ui-sref="editProfile" src="images/cog.png" /> -->
          </nav>
        </header>
      </div>
@@ -41,10 +58,10 @@
       <!-- MAIN HEADER CONTENT
           –––––––––––––––––––––––––––––––––––––––––––––––––– -->
       <div class="spacer">
-        <img src="images/avatar.jpg" alt="avatar" class="main-avatar" />
+        <gravatar email="hero.email"></gravatar>
         <div class="row">
           <div class="main">
-            <h3>{{hero.author}}<img class="edit-content" ng-show="isAuthed()" ui-sref="editProfile" src="images/cog.png" /></h3>
+            <h3>{{hero.author}}</h3>
             <p>{{hero.bio}}</p>
           </div>
         </div>
@@ -63,23 +80,29 @@
   window.owner = <%- JSON.stringify(owner) %>;
   window.heroInfo = <%- JSON.stringify(hero) %>;
   window.article = <%- JSON.stringify(article) %>;
+  var path = '/css/themes/' + heroInfo.theme + '.css';
+  document.getElementById("dynamiccss").setAttribute('href', path);
 </script>
 
   <!-- LIBRARY SCRIPTS -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.15/angular-ui-router.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script>
 
   <!-- LOCAL SCRIPTS -->
-  <script src="lib/angular-sanitize/angular-sanitize.min.js"></script>
-  <script src="lib/showdown/compressed/Showdown.min.js"></script>
-  <script src="lib/angular-markdown-directive/markdown.js"></script>
-    <script src="lib/toastr/toastr.min.js"></script>
+  <script src="/lib/angular-sanitize/angular-sanitize.min.js"></script>
+  <script src="/lib/marked/marked.min.js"></script>
+  <script src="/lib/angular-marked/angular-marked.min.js"></script>
+  <script src="/lib/toastr/toastr.min.js"></script>
 
-  <script src="app/user/user.js"></script>
-  <script src="app/article/article.js"></script>
-  <script src="app/services.js"></script>
-  <script src="app/app.js"></script>
+  <script src="/vendor/gravatar/gravatar.js"></script>
+  <script src="/vendor/gravatar/md5.js"></script>
+
+  <script src="/app/user/user.js"></script>
+  <script src="/app/article/article.js"></script>
+  <script src="/app/services.js"></script>
+  <script src="/app/app.js"></script>
 
   <script>
 
@@ -100,6 +123,7 @@
         $(this).find(".edit-content").fadeOut(300);
       });
     });
+
   </script>
   </body>
 </html>

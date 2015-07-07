@@ -1,10 +1,42 @@
 <!-- template for displaying and editing user info -->
 <div ng-controller="UserController">
+  <h4>General Settings</h4>
   <form>
-    <input type="text" ng-model="hero.author" /></h2>
+    <label>Name</label>
+    <input type="text" ng-model="hero.author" />
+    <label>Email Address (for gravatar)</label>
+    <input type="text" ng-model="hero.email" />
+    <label>Bio</label>
     <textarea ng-model="hero.bio" />
+    <label>Theme</label>
+      <select ng-options="theme for theme in themes" ng-model="hero.theme" ng-change="previewTheme()"></select>
+    <label for="#disqus_shortname">Disqus</label>
+    <input type="text" id="disqus_shortname" ng-model="hero.disqus_shortname" placeholder="enter unique identifier to enable commenting" />
     <div class="row">
       <button ng-click="update()" class="save-content">Save</button>
+      <button ng-click="cancel()" class="cancel-edit">Cancel</button>
     </div>
   </form>
+
+  <div>
+    <h4>Password</h4>
+    <form>
+      <div>
+        <label>New Password:</label>
+        <input type="password" placeholder="New password" ng-model="newPassword"/>
+      </div>
+      <div>
+        <label>Confirm New Password:</label>
+        <input type="password" placeholder="Confirm new password" ng-model="newPasswordConfirmation"/>
+        <span ng-show="newPasswordConfirmation && newPassword !== newPasswordConfirmation">passwords don't match<span>
+      </div>
+      <div>
+        <button ng-show="newPassword && newPassword === newPasswordConfirmation"
+             ng-click="changePassword()">Change Password</button> <span></span>
+      </div>
+    </form>
+  </div>
+
 </div>
+
+<!-- ng-change="changeTheme()" -->

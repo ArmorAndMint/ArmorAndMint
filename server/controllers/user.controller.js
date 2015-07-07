@@ -11,10 +11,10 @@ module.exports = {
       function(err, user) {
         if (err) {
           console.error('Cannot create user: ', req.body.username, ' ', err);
-          return res.json({ user : user, error: err});
+          return res.json({error: err});
         }
         passport.authenticate('local')(req, res, function () {
-          res.redirect('/');
+          res.json({user:user});
         });
       });
   },
@@ -45,11 +45,12 @@ module.exports = {
 
   // Update owner info
   update: function(req, res, next){
+    console.log(req.body);
     // the route gets passed in with a user ID which express
     // kindly sticks on req.params.userId for us
 
     // search for a user with that id
-    User.findOne({_id: req.params.userId}, function(err, result){
+    User.findOne({_id: req.user._id}, function(err, result){
       if (err){
         console.error(err);
         next();
@@ -68,9 +69,27 @@ module.exports = {
         _id: result._id,
         username: result.username,
         bio: result.bio,
-        author: result.author
+        author: result.author,
+        theme: result.theme,
+        email: result.email,
+        disqus_shortname: result.disqus_shortname
       });
 
+    });
+  },
+
+  changePassword: function(req, res, next) {
+    User.findOne({_id: req.user._id}, function(err, user){
+      if (err) return next();
+
+      user.setPassword(req.body.password, function(err){
+        if(err){
+          res.status(500).end();
+        } else {
+          user.save();
+          res.status(200).end();
+        }
+      });
     });
   }
 

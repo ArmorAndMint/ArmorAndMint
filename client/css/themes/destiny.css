@@ -131,7 +131,7 @@ input {
 }
 
 .post {
-    border-bottom:1px solid lightgray;
+    border-bottom:1px solid white;
     margin-bottom: 15px;
 }
 
@@ -165,4 +165,29 @@ input {
     margin:auto;
     margin-top: 10px;
     margin-bottom: 10px;
+}
+
+body {
+    min-height: 1000px;
+    background-image: url('https://s.yimg.com/fz/api/res/1.2/AwW8o88sIIvt6IcDEeYP9A--/YXBwaWQ9c3JjaGRkO2g9MTA4MDtxPTk1O3c9MTkyMA--/http://www.destinycheats.org/wp-content/uploads/2014/06/destiny-wallpaper-005.jpg');
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    font-family: 'Cabin', sans-serif;
+}
+
+.listViewContainer, .timeline-container {
+  background-color: rgba(128,128,128, 0.2);
+}
+
+.edit-settings{
+  color:black;
+}
+
+form {
+  color: black;
+}
+
+button {
+    background-color: #545454;
+    color: white;
 }

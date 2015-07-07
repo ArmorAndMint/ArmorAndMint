@@ -2,8 +2,16 @@
   <div class="post">
   <form>
     <h2><input type="text" ng-model='article.title' placeholder="Title" /></h2>
-    <p><textarea ng-model="article.body" placeholder="Write your article in markdown here...." /></p>
-    <p class="help-text">You can edit your posts with <a href="https://en.wikipedia.org/wiki/Markdown">Markdown</a> or HTML</p>
+    <div>
+      <table style="width:100%">
+        <tr>
+          <td style="vertical-align:top; width:50%;"><textarea ng-model="article.body" placeholder="Write your article in markdown here...." /></td>
+          <td style="vertical-align:top; width:50%;" marked="article.body"></td>
+        </tr>
+      </table>
+      <p class="help-text">Edit your posts with <a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet">Markdown</a> or HTML</p>
+    </div>
+
     <div class="row">
       <button ng-click="create()" class="save-content">Publish</button>
       <button ui-sref="articles" class="delete-content">Cancel</button>

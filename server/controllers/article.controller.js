@@ -8,26 +8,20 @@ var utils = require('../config/utils');
 
 module.exports = {
 
-  // TODO: wire this up to completion.
-  findByTitle: function(req, res) {
-    var strippedTitle = req.params.title.split('-').join(' ');
-    console.log(strippedTitle);
-    Article.findOne({title: strippedTitle}, function(err, result){
-      if (err) {
-        console.error(err);
-        // redirect to index page since we cant find their article?
-        // could also send warnings/404s etc
-        return res.redirect('/');
+  findById: function(req, res) {
+    Article.findById(req.params.id, function(err, result){
+      if (err){
+        //if passed in id was a pretty_id, mongoose cannot cast it to an objectId
+        Article.findOne({pretty_id: req.params.id}, function(err, result){
+          if(err){
+            return res.redirect('/');
+          }
+          utils.renderIndex(req, res, result);
+
+        });
+      } else {
+        utils.renderIndex(req, res, result);
       }
-
-      // the idea here would be to use something like:
-      // res.render('index', {user: null, article: result});
-      // and then on client side on app.run check for the article value
-      // and load up a view to display just that article.
-
-      // call our custom built renderIndex function to render a new page set to
-      // start with our article
-      utils.renderIndex(req, res, result);
     });
   },
 
@@ -50,14 +44,16 @@ module.exports = {
     // into something we can access on req.params.article_id
     // see article.routes.js for the route created to extract this param
     // see: http://expressjs.com/api.html#req.params
-    Article.findOne({_id: req.params.article_id}, function(err, result){
+    Article.findById(req.params.article_id, function(err, result){
       if (err){
-        console.error(err);
-        return res.json(err);
+        //if passed in id was a pretty_id, mongoose cannot cast it to an objectId
+        Article.findOne({pretty_id: req.params.article_id}, function(err, result){
+          res.json(result);
+        });
+      } else {
+        return res.json(result);
       }
-      return res.json(result);
     });
-
   },
 
   // Create a new article
@@ -74,7 +70,8 @@ module.exports = {
       // TODO: should username and 'display name' be two
       // different things? for now we are just displaying the username
       // as the author
-      author: req.user.author
+      author: req.user.author,
+      pretty_id: req.body.title.replace(/\s+/g, '-').toLowerCase()
     }
     Article.create(article, function(err, result){
       if (err){
@@ -108,6 +105,10 @@ module.exports = {
         }
       }
 
+      //Consider - disqus comments are tied to a url, changing it will loose comments
+      //should we give user the option to change it?
+      article.pretty_id = article.title.replace(/\s+/g, '-').toLowerCase();
+
       // save the changes we made to the model
       article.save();
 
@@ -122,7 +123,7 @@ module.exports = {
     Article.remove({_id: req.params.article_id}, function(err, result){
       if (err){
         console.error(err);
-        res.json(err);
+        return res.json(err);
       }
       res.json('You deleted: ' + req.params.article_id);
     });

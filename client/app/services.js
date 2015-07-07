@@ -18,7 +18,18 @@ angular.module('lightCMS.Services', [])
 
     user.update = function(newUserInfo){
       // TODO: some results handling
-      return $http.post('/user/' + user.hero.id, newUserInfo);
+      return $http.post('/user', newUserInfo);
+    };
+
+    //change the users password
+    user.changePassword = function(newPassword, callback) {
+      $http.post('/user/password', {password: newPassword})
+        .success(function(){
+          callback();
+        })
+        .error(function(){
+          callback("Error");
+        });
     };
 
     // now user.data gets set about our user at server render/client load
@@ -31,15 +42,15 @@ angular.module('lightCMS.Services', [])
     // send user credentials to the server
     // it responds with a user object if successfull
     // error handling could be worked on
-    user.signin = function(credentials) {
+    user.signin = function(credentials, callback) {
       $http.post('/signin', credentials)
         .success(function(data){
           user.data = data.user;
           $state.go('articles');
-          toastr.success('Successfully signed in');
         })
         .error(function(err){
-          console.error(err);
+          toastr.error('Failed to login', err);
+          callback(err);
         });
     };
 
@@ -50,7 +61,6 @@ angular.module('lightCMS.Services', [])
       $http.post('/signout');
       user.data = null;
       $state.go('articles');
-      toastr.success('Successfully signed out');
     };
 
     return user;
@@ -93,4 +103,13 @@ angular.module('lightCMS.Services', [])
     };
 
     return article;
+})
+
+.factory('Themes', function($http) {
+  var themes = {};
+  themes.fetchAll = function () {
+    return $http.get('/api/themes');
+  }
+  return themes;
+
 });

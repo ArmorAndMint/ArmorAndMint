@@ -2,11 +2,20 @@
   <div class="post">
   <form>
     <h2><input type="text" ng-model="currentArticle.title" /></h2>
-    <p><textarea ng-model="currentArticle.body" /></p>
-    <p class="help-text">You can edit your posts with <a href="https://en.wikipedia.org/wiki/Markdown">Markdown</a> or HTML</p>
+    <div>
+      <table style="width:100%">
+        <tr>
+          <td style="vertical-align:top; min-height:300px;"><textarea ng-model="currentArticle.body" placeholder="Write your article in markdown here...." /></td>
+          <td style="vertical-align:top;" marked="currentArticle.body"></td>
+        </tr>
+      </table>
+      <p class="help-text">Edit your posts with <a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet">Markdown</a> or HTML</p>
+    </div>
     <div class="row">
       <button ng-click="update()" class="save-content">Publish</button>
-      <button ng-click="destroy()" class="delete-content">Delete</button>
+      <button ng-click="confirmDelete()" class="delete-content">Delete</button>
+      <button ng-show="confirmingDelete" ng-click="destroy()" class="delete-content">Confirm</button>
+      <button ng-show="confirmingDelete" ng-click="cancel()" class="">Cancel</button>
     </div>
   </form>
   </div>

@@ -3,23 +3,70 @@
   <link rel="stylesheet" href="css/normalize.css">
   <link rel="stylesheet" href="css/skeleton.css">
   <link rel="stylesheet" href="css/styles.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 </head>
 <body>
   <div class="container vert-align">
-    <form action="/register" method="post">
+    <form id="register">
       <h1>LightCMS Setup</h1>
       <br><br>
       <div>
         <label>Username:</label>
-        <input type="text" name="username" placeholder="Name used to log in"/>
+        <input type="text" id="username" name="username" placeholder="Name used to log in"/>
       </div>
       <div>
         <label>Password:</label>
-        <input type="password" name="password" placeholder="Your password"/>
+        <input type="password" id="password" name="password" placeholder="Your password"/>
+      </div>
+      <div>
+        <label>Confirm Password:</label>
+        <input type="password" id="passwordConfirmation" ame="passwordConfirmation" placeholder="password again"/>
       </div>
       <div>
         <input type="submit" value="Register"/>
+        <span id="error-message"></span>
       </div>
     </form>
   </div>
+  <script>
+    $(function(){
+      $("#register").submit(function(evt){
+        evt.preventDefault();
+        var username = $("#username").val();
+        var password = $("#password").val();
+        var confirmation = $("#passwordConfirmation").val();
+
+        if(password && confirmation){
+          if(password === confirmation) {
+            register(username, password);
+          }else {
+            return $("#error-message").text("Password Mismatch");
+          }
+        } else{
+          return $("#error-message").text("Please enter and confirm password");
+        }
+      });
+      
+    });
+      function register(username, password) {
+        $.ajax({
+          method: "POST",
+          url: "/register",
+          data: {
+            username: username,
+            password: password
+          },
+          success: function(response){
+            if(response.error) {
+              return $("#error-message").text(response.error.message);
+            } else {
+              window.location.replace("/");
+            }
+          },
+          error: function(err){
+            console.log(err);
+          }
+        });
+      }
+  </script>
 </body>

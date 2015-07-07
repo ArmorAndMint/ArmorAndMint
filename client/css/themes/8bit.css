@@ -1,0 +1,187 @@
+
+/* NAVIGATION */
+
+h1 {
+    display: inline;
+    font-size: 35px;
+}
+button {
+    display: inline-block;
+}
+header {
+    text-align: justify;
+    letter-spacing: 1px;
+    height: 8em;
+
+}
+header h1,
+header nav {
+    display: inline-block;
+    padding-top: 10px;
+}
+
+header::after {
+    content: '';
+    display: inline-block;
+    width: 100%;
+}
+
+header nav button {
+    margin-right: 5px;
+    font-size: 10px;
+    text-align: center;
+}
+
+
+/* MAIN HEADER */
+
+h3,
+h6 {
+    display: inline-block;
+}
+textarea {
+    width: 100%;
+    height: 8em;
+}
+input {
+    width: 100%;
+}
+
+.main {
+    text-align: center;
+    color: black;
+}
+.main button {
+
+    height: 30px;
+    font-size: 12px;
+    text-align: center;
+}
+
+.main-avatar {
+    display: block;
+    height: 80px;
+    width: 80px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 10px;
+    border-radius: 50%;
+}
+
+.main h3 {
+    font-size: 27px;
+    display: block;
+}
+.main p {
+    font-size: 20px;
+    color: grey;
+    display: inline-block;
+}
+
+.spacer {
+
+    margin-top: 20px;
+    margin-bottom: 40px;
+}
+.help-text{
+    margin-top: -4.5rem;
+    color: #bbb;
+    font-size: 12px !important;
+}
+.vert-align{
+    display: table;
+    height: 75vh;
+}
+.vert-align>form{
+    display: table-cell;
+    vertical-align: middle;
+}
+.preview>p {
+    display: inline;
+}
+
+/* BUTTONS */
+
+.edit-content {
+    display: none;
+    margin-left: 5px;
+    cursor: pointer;
+    float: right;
+    vertical-align: top;
+}
+.delete-content {
+    background-color: #EA5757;
+    border-color: #EA5757;
+    color: #FFFFFF;
+}
+.save-content {
+    background-color: #0B990D;
+    border-color: #0B990D;
+    color: #FFFFFF;
+}
+
+/* BLOG TIMELINE */
+
+
+.timeline-container {
+    border-top:1px solid black;
+    margin-top: 10px;
+    text-align: left;
+    padding-top: 10px;
+}
+
+.post {
+    border-bottom:1px solid black;
+    margin-bottom: 15px;
+}
+
+.post h2 {
+    font-weight: 600;
+    font-size: 30px;
+}
+
+.post p {
+    font-size: 18px;
+    font-weight: 400;
+}
+.post img {
+    height: 3%;
+    width: 3%;
+    border-radius: 50%;
+    margin-right: 2px;
+    margin-bottom: -8px;
+}
+
+.post h2>a {
+    color: #222222;
+    text-decoration: none;
+}
+.post a:hover {
+    text-decoration: underline;
+}
+
+.load {
+    text-align:center;
+    margin:auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.row {
+  color: black;
+}
+
+body {
+    min-height: 1000px;
+    background-image: url('https://media4.giphy.com/media/uinI66mFK73Ne/200.gif');
+    background-size: 100% 100%;
+    font-family: 'Press Start 2P', cursive;
+}
+
+.listViewContainer, .timeline-container {
+  background-color: rgba(255,255,255, 0.4);
+}
+
+button {
+    background-color: #FF6600;
+}

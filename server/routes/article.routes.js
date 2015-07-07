@@ -16,15 +16,12 @@ module.exports = function(app) {
   // all routes that need auth will have it by adding passport.authenticate()
   // to the beggining of the action parameters list
 
-  // pretty link article
-  // TODO: Make this work :)
-  // currently there is no way implemented to have the client render this
-  app.route('/:title')
+  app.route('/articles/:id')
     .get(function(req, res, next){
       // search the db
-      Article.findByTitle(req, res, next);
+      Article.findById(req, res, next);
   });
-
+  
   // main articles routes
   app.route('/api/articles')
     // Call the article controller and ask for a list of articles

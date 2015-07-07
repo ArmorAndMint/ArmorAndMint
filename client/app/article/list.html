@@ -2,10 +2,10 @@
 <div class="timeline-container" ng-controller="ArticlesController">
   <div class='listViewContainer'>
     <div class="post" ng-repeat="article in articles | orderBy: '-createdOn'">
-      <h2><a ui-sref="view({id: article._id})">{{article.title}}</a><img class="edit-content" ng-show="user.isAuthed()" ui-sref="edit({id: article._id})" src="images/cog.png" /></h2>
-      <span class="preview" btf-markdown="article.body | limitTo: 175"></span><span ng-if="article.body.length >= 175" ui-sref="view({id: article._id})">... (show more)</span>
+      <h2><a ui-sref="view({id: article.pretty_id || article._id})">{{article.title}}</a><img class="edit-content" ng-show="user.isAuthed()" ui-sref="edit({id: article._id})" src="images/cog.png" /></h2>
+      <span class="preview" marked="article.body | limitTo: 175"></span><span ng-if="article.body.length >= 175" ui-sref="view({id: article._id})">... (show more)</span>
       <div class="row">
-        <img src="images/avatar.jpg" alt="avatar"/>
+        <gravatar email="hero.email"/>
         <h6>{{article.author}} | {{article.createdOn | date:'longDate'}}</h6>
       </div>
     </div>
@@ -14,4 +14,3 @@
     </div> -->
   </div>
 </div>
-

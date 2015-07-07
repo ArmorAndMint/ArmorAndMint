@@ -59,6 +59,8 @@ module.exports = function() {
   // add an api route for handling content posts and requests
   // this should always be authenticated for POST events
   require('../routes/article.routes.js')(app);
+  // themes route
+  require('../routes/theme.routes.js')(app);
 
   app.use(express.static(path.join(__dirname, '../../client'), {index: false})); //static files served, index:false allows custom '/' routing
 
